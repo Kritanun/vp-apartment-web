@@ -39,6 +39,11 @@ export const ExportBillApi = ({
             saveFileFromResponse(res,`monthly_bill_${electricity_year}_${electricity_month}.zip`)
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }
@@ -64,6 +69,11 @@ export const ExportOverdueBillApi = ({
             saveFileFromResponse(res,`overdue_bill_${moment().format('YYYY')}_${moment().format('MM')}.zip`)
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }
@@ -88,6 +98,11 @@ export const ExportReservBillApi = ({
             saveFileFromResponsePDF(res,`overdue_bill_${moment().format('YYYY')}_${moment().format('MM')}.pdf`)
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }

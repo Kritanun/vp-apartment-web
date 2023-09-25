@@ -58,8 +58,8 @@ export default function PageElectricity() {
   const [filters, setFilters] = useState({
     page: 1,
     size: 10,
-    month: moment().format('MM'),
-    year: moment().format('YYYY'),
+    // month: moment().format('MM'),
+    // year: moment().format('YYYY'),
   })
 
   const [filtersSearch, setFiltersSearch] = useState({
@@ -92,7 +92,7 @@ export default function PageElectricity() {
         value: item?.room_id,
       })
 
-      if (item.room_status == 'สำเร็จ') {
+      if (item.room_status == 'สำเร็จ' || item.room_status == 'ขอย้ายห้อง' || item.room_status == 'ขอย้ายออก') {
         tempData2.push({
           label: `${item?.room_no} ตึก ${item?.building_name}`,
           value: item?.room_id,
@@ -223,6 +223,12 @@ export default function PageElectricity() {
       title: 'ส่วนลด',
       dataIndex: 'discount',
       key: 'discount',
+      width: 100,
+    },
+    {
+      title: 'ค่าบริการเพิ่มเติม',
+      dataIndex: 'add_amount',
+      key: 'add_amount',
       width: 100,
     },
     {
@@ -463,7 +469,7 @@ export default function PageElectricity() {
               <Col xs={24} lg={6} style={{ paddingRight: 5 }}>
                 <Form.Item label="เดือน ปี">
                   <DatePicker
-                    defaultValue={moment()}
+                    // defaultValue={moment()}
                     style={{ width: '100%' }}
                     picker="month"
                     onChange={(value) => {
@@ -739,6 +745,19 @@ export default function PageElectricity() {
                 ]}
               >
                 <InputNumber style={{ width: '100%' }} placeholder='ส่วนลด' />
+              </Form.Item>
+              <Form.Item 
+                label="ค่าบริการเพิ่มเติม" 
+                name="add_amount" 
+                labelCol={{ span: 6 }}
+                rules={[
+                  {
+                    required: true,
+                    message: 'กรุณากรอกค่าบริการเพิ่มเติม',
+                  },
+                ]}
+              >
+                <InputNumber style={{ width: '100%' }} placeholder='ค่าบริการเพิ่มเติม' />
               </Form.Item>
               <Form.Item
                 style={{display:'none'}} 

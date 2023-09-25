@@ -42,6 +42,11 @@ export const getFeedbackApi = ({
             }
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }
@@ -71,6 +76,11 @@ export const createFeedbackApi = ({
            return res
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }
@@ -94,6 +104,11 @@ export const updateFeedbackApi = ({
            return res
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }

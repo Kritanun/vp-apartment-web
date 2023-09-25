@@ -3,7 +3,7 @@ import { useState } from 'react'
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import './App.css';
-import { Button, Layout, Menu, Modal, Form, Input, Spin, notification, Space, Image } from 'antd';
+import { Button, Layout, Menu, Modal, Form, Input, Spin, notification, Space, Image, Select } from 'antd';
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -41,7 +41,7 @@ import PageMonthlyDashboard from './pages/monthly_dashboard';
 import PageFeedBack from './pages/feed_back';
 import PageFeedBackAdmin from './pages/feed_back_admin';
 import PageUsageRoomDashboard from './pages/usage_room_dashboard';
-
+import { getAllRoomAvailableApi } from './services/filter'
 
 import logo from './images/logo.png'
 
@@ -50,7 +50,45 @@ import { loginApi, getMeApi, logoutApi, registerApi, forgetPasswordApi } from '.
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu
 
+const getDropdown = async () => {
+  // setLoadingPage(true)
+  let dataRoom = await getAllRoomAvailableApi()
+
+  // let dataBuilding = await getDropdownBuildingApi()
+
+  let tempData = []
+  let tempData2 = []
+  dataRoom.data.map((item) => {
+    tempData.push({
+      label: `${item?.room_no} ตึก ${item?.building_name}`,
+      value: item?.room_id,
+    })
+
+    if (item.room_status == 'สำเร็จ' || item.room_status == 'ขอย้ายห้อง' || item.room_status == 'ขอย้ายออก') {
+      tempData2.push({
+        label: `${item?.room_no} ตึก ${item?.building_name}`,
+        value: item?.room_id,
+      })
+    }
+  })
+
+  // setDropdownRoomNo(tempData)
+  return tempData
+
+  // tempData = []
+  // dataBuilding.data.map((item) => {
+  //   tempData.push({
+  //     label: item?.building_name,
+  //     value: item?.building_name,
+  //   })
+  // })
+
+  // setDropdownBuilding(tempData)
+  // setLoadingPage(false)
+}
+
 class MySider extends React.Component {
+  
   state = {
     collapsed: true,
     auth: null,
@@ -59,6 +97,7 @@ class MySider extends React.Component {
     visibleModelForget: false,
     loadingPage: false
   };
+  dropdownRoomByStatus = []
 
   toggle = () => {
     this.setState({
@@ -246,10 +285,11 @@ class MySider extends React.Component {
                       <Button
                         icon={<UserAddOutlined />}
                         style={{ marginLeft: 5 }}
-                        onClick={() => {
+                        onClick={async() => {
                           if(this.formCreate){
                             this.formCreate.resetFields()
                           }
+                          this.dropdownRoomByStatus = await getDropdown()
                           this.setState({
                             ...this.state,
                             visibleModelSignUp: true
@@ -615,6 +655,29 @@ class MySider extends React.Component {
                 ]}
               >
                 <Input.Password placeholder='รหัสผ่าน' />
+              </Form.Item>
+              <Form.Item
+                label="เลขห้อง"
+                name="room_id"
+                labelCol={{ span: 6 }}
+                rules={[
+                  {
+                    required: false,
+                    message: 'กรุณาเลือกห้อง',
+                  },
+                ]}
+              >
+                <Select
+                  showSearch
+                  style={{ width: '100%' }}
+                  placeholder="เลขห้อง"
+                  options={this.dropdownRoomByStatus}
+                  filterOption={(input, option) =>
+                    option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }
+                // onChange={handleChange}
+                >
+                </Select>
               </Form.Item>
               <div style={{ textAlign: 'right' }}>
                 <Button onClick={()=>{

@@ -54,6 +54,12 @@ export const getElectricityBillApi = ({
             }
         })
         .catch((err) => {
+            console.log(err.response)
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }
@@ -70,7 +76,8 @@ export const createElectricityBillApi = ({
     trash_amount,
     comsumption_water,
     water_amount,
-    discount
+    discount,
+    add_amount
 }) => {
 
     const data = {
@@ -85,7 +92,8 @@ export const createElectricityBillApi = ({
         water_start_unit: water_start_unit,
         water_end_unit: water_end_unit,
         water_amount: water_amount,
-        discount: discount
+        discount: discount,
+        add_amount: add_amount
     }
 
     const config = {
@@ -104,6 +112,11 @@ export const createElectricityBillApi = ({
             }
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }
@@ -117,7 +130,8 @@ export const updateElectricityBillApi = ({
     trash_amount,
     comsumption_water,
     water_amount,
-    discount
+    discount,
+    add_amount
 }, id) => {
 
     const data = {
@@ -129,7 +143,8 @@ export const updateElectricityBillApi = ({
         trash_amount: trash_amount,
         comsumption_water: comsumption_water,
         water_amount: water_amount,
-        discount: discount
+        discount: discount,
+        add_amount: add_amount
     }
 
     const config = {
@@ -148,6 +163,11 @@ export const updateElectricityBillApi = ({
             }
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }
@@ -164,6 +184,11 @@ export const deleteElectricityBillApi = (id) => {
 
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }
@@ -180,6 +205,11 @@ export const approvePaymentApi = (id) => {
             return res.data
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }

@@ -53,6 +53,11 @@ export const getElectricityBillOverdueApi = ({
             }
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }
@@ -69,6 +74,11 @@ export const approvePaymentOverdueApi = (id) => {
             return res.data
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }

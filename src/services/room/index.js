@@ -53,6 +53,12 @@ export const getRoomApi = ({
             }
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
+
             return err
         })
 }
@@ -86,6 +92,11 @@ export const createRoomApi = ({
            return res.data
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }
@@ -119,6 +130,11 @@ export const updateRoomApi = ({
            return res
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }
@@ -135,6 +151,11 @@ export const deleteRoomApi = (id) => {
            return res
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }
@@ -153,6 +174,11 @@ export const getRoomSummaryApi = () => {
             }
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }
@@ -176,6 +202,11 @@ export const updateRoomOutstandingBalanceApi = ({
            return res
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }

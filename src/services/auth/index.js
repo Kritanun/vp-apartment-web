@@ -35,6 +35,11 @@ export const loginApi = ({
             return res.data
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }
@@ -54,6 +59,11 @@ export const logoutApi = ({ authToken }) => {
             return res.data
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }
@@ -64,7 +74,8 @@ export const registerApi = ({
     tel_number,
     email,
     username,
-    password
+    password,
+    room_id
 }) => {
 
     const data = {
@@ -73,7 +84,8 @@ export const registerApi = ({
         tel_number: tel_number,
         email: email,
         username: username,
-        password: password
+        password: password,
+        room_id: room_id
     }
 
     const config = {
@@ -87,6 +99,11 @@ export const registerApi = ({
             return res.data
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return 400
         })
 }
@@ -106,6 +123,11 @@ export const getMeApi = ({ authToken }) => {
             return res.data
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }
@@ -133,6 +155,11 @@ export const forgetPasswordApi = ({
             return res
         })
         .catch((err) => {
+            if(err?.response?.status == 401){
+                localStorage.removeItem('token')
+                localStorage.removeItem('auth')
+                window.location.href = `${window.location.origin.toString()}${process.env.REACT_APP_BASENAME}`
+            }
             return err
         })
 }

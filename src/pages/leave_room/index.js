@@ -401,7 +401,7 @@ export default function PageReservRoom() {
               pagination={{
                 current: filters.page,
                 pageSize: filters.size,
-                total: total,
+                total,
                 showQuickJumper: true,
                 showSizeChanger: true,
                 showTotal: (total) => `Total ${total} items`
